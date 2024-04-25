@@ -11,7 +11,7 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 # Data you want to send
-data = "hot"
+data = "산"
 
 # Sending data to Firebase
 db.child("suhwa_data").push(data)
