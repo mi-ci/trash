@@ -2,7 +2,6 @@ import cv2
 import requests
 from picamera2 import Picamera2
 
-
 picam2 = Picamera2()
 picam2.preview_configuration.main.size = (800,800)
 picam2.preview_configuration.main.format = "RGB888"
