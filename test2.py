@@ -10,8 +10,8 @@ picam2.configure("preview")
 picam2.start()
 
 while True:
-    ret, img = picam2.capture_array()
-    ret, buffer = cv2.imencode('.jpg', img)
+    img = picam2.capture_array()
+    _, buffer = cv2.imencode('.jpg', img)
     requests.post("http://e760-1-233-65-186.ngrok-free.app/video_feed", files = {"frame" : buffer.tobytes()})
     if cv2.waitKey(1) == ord('q'):
         break
