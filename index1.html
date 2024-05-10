@@ -9,11 +9,22 @@
 <body>
   <h1 id="title"></h1>
   <script>
-    fetch('http://localhost:5005/version').then(function(response) {
-      return response.json();
-    }).then(function(myJson) {
-      document.getElementById('title').innerHTML = myJson;
-    });
+    function fetchVersion() {
+            fetch('http://localhost:5005/version')
+                .then(response => response.json())  // Parse the JSON from the response
+                .then(data => {
+                    // console.log(data);  // View the data structure in the console
+                    document.getElementById('title').textContent = data.version;  // Set the text content to the version
+                })
+                .catch(error => console.error('Error fetching version:', error));
+        }
+
+        // Call the function when the page loads
+        // window.onload = fetchVersion;
+        setInterval(fetchVersion, 5000);
+        // $(document).ready(function () {
+        //   setInterval(() => fetchVersion, 1000);
+        // });
     </script>
 </body>
 </html>

@@ -5,7 +5,7 @@ const cheerio = require('cheerio')
 const getHtml = async () => {
     const html = await axios.get("https://www.gate.io/");
     const $ = cheerio.load(html.data);
-    const a = $("td.mantine-Table-dataItem").text().substring(10,19)
+    let a = $("td.mantine-Table-dataItem").text().substring(10,19)
     return a
 };
 const app = express();
@@ -16,10 +16,15 @@ app.get('/', (req, res) => {
     res.sendFile('index1.html', {root: __dirname });
 });
 
-app.get('/version', (req, res) => {
-    const myVersion = getHtml()
-    console.log(myVersion)
-    res.json(myVersion);
+app.get('/version', async (req, res) => {
+    try {
+        const myVersion = await getHtml();  // Wait for the promise to resolve
+        console.log(myVersion);  // Now myVersion is a string, not a Promise
+        res.json({ version: myVersion });
+    } catch (error) {
+        console.error(error);  // Log the error if something goes wrong
+        res.status(500).json({ error: 'Failed to fetch version' });
+    }
 });
 
 app.listen(PORT, () => {
